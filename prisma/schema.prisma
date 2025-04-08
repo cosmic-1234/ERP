@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model customer {
+  id Int @id @default(autoincrement())
+  customerno String @unique
+  name String
+  address String
+  paymentterms String
+  shipcond     String
+  creditlimit Decimal
+  email    String @unique
+  salesorders salesorder[]
+}
+model material {
+  id  Int @id @default(autoincrement())
+  materialno String @unique
+  description String
+  uom String
+  pricingdetails Json
+  salesorderitems salesorderitems[]
+}
+model salesorder {
+  id Int @id @default(autoincrement())
+  orderno String @unique
+  customerid Int
+  customer  customer @relation(fields: [customerid],references: [id])
+  orderdate DateTime
+  deliverydate DateTime?
+  shippingaddress String
+  paymentterms String
+  shippingconditions String
+  orderitems salesorderitems[]
+  delivery delivery?
+  billingdocument invoice?
+}
+model salesorderitems{
+  id Int @id @default(autoincrement())
+  salesorderid Int
+  salesorder   salesorder @relation(fields: [salesorderid], references: [id])
+  materialid Int
+  material material   @relation(fields: [materialid], references: [id])
+  quantity Decimal
+  unitprice Decimal
+  discount  Decimal?
+}
+model delivery{
+  id Int @id @default(autoincrement())
+  deliveryno String @unique
+  salesorderid Int @unique
+  salesorder salesorder  @relation(fields: [salesorderid], references: [id])
+  deliverydate DateTime
+  shippingaddress String
+  goodsissuedate DateTime?
+}
+
+model invoice {
+  id Int @id @default(autoincrement())
+  billingno String @unique
+  salesorderid Int @unique
+  salesorder salesorder @relation(fields: [salesorderid], references: [id])
+  billingdate DateTime
+  amount Decimal
+@@map("invoice")
+}
+ 
+model pricingconditions {
+  id Int @id @default(autoincrement())
+  conditiontype String
+  customergroup String?
+  materialgroup String?
+  validfrom DateTime
+  validto DateTime
+  amount Decimal?
+}
