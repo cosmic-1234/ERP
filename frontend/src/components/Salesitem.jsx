@@ -37,6 +37,7 @@ const Salesitem = ()=>{
                   <tr key={index} className="even:bg-gray-50">
                     <td className="border px-6 py-3">
                       <input
+                      disabled = {row.disabled}
                         type="text"
                         value={row.material}
                         onChange={(e) => handleChange(index, "material", e.target.value)}
@@ -45,6 +46,7 @@ const Salesitem = ()=>{
                     </td>
                     <td className="border px-6 py-3">
                       <input
+                      disabled = {row.disabled}
                         type="number"
                         value={row.quantity}
                         onChange={(e) => handleChange(index, "quantity", e.target.value)}
@@ -53,6 +55,7 @@ const Salesitem = ()=>{
                     </td>
                     <td className="border px-6 py-3">
                       <input
+                      disabled = {row.disabled}
                         type="number"
                         value={row.unitprice}
                         onChange={(e) => handleChange(index, "unitprice", e.target.value)}
@@ -61,6 +64,7 @@ const Salesitem = ()=>{
                     </td>
                     <td className="border px-6 py-3">
                       <input
+                      disabled = {row.disabled}
                         type="number"
                         value={row.salesorder}
                         onChange={(e) => handleChange(index, "salesorder", e.target.value)}
@@ -69,10 +73,11 @@ const Salesitem = ()=>{
                     </td>
                     <td className="border px-6 py-3 text-center">
                       <button
-                        onClick={() => Createsalesitem(row)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition"
+                      disabled = {row.disabled}
+                        onClick={() => Createsalesitem(row, index, "disabled")}
+                        className={`${row.disabled?"bg-green-700":"bg-blue-900 hover:bg-blue-800 hover:cursor-pointer"}  text-white font-medium py-2 px-4 rounded-md transition`}
                       >
-                        Create Item
+                        {row.disabled? "Item Created": "Create Sales Item"}
                       </button>
                     </td>
                   </tr>
@@ -91,7 +96,7 @@ const Salesitem = ()=>{
           </div>
         </>
       );
-      async function Createsalesitem(item){
+      async function Createsalesitem(item, index){
         debugger
         const req = {
           orderno:    item.salesorder,
@@ -101,7 +106,13 @@ const Salesitem = ()=>{
         }
         try {
           const response = await axios.post("http://localhost:3000/api/v1/admin/createsalesorderitem", req)
-        console.log(response);
+        console.log(response)
+        const obj1 = {
+          index:index,
+          field:"disabled",
+          value:true
+        }
+        dispatch(editstate(obj1))
         } catch (error) {
           alert("Wefuckedup")
         }

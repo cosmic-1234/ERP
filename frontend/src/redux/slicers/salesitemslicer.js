@@ -7,7 +7,8 @@ const init = [
         material: "AAAA",
         quantity: "1234",
         unitprice:"5",
-        salesorder:"1234"
+        salesorder:"1234",
+        disabled: false
 
     }
 ]
@@ -21,9 +22,11 @@ const salesitemslice = createSlice({
             material: action.payload.material,
             quantity: action.payload.quantity,
             unitprice: action.payload.unitprice,
-            salesorder:action.payload.salesorder
+            salesorder:action.payload.salesorder,
+            disabled:false
         }
         state.push(temp1)
+        
            
         },
         editstate:(state, action)=>{

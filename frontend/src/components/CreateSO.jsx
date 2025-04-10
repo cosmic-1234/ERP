@@ -130,13 +130,13 @@ return (
         <div className="mt-10 flex justify-end gap-5">
           <button
             onClick={searchcustomer}
-            className="bg-blue-600 hover:bg-blue-700 transition-all text-white px-6 py-3 rounded-md text-xl shadow-sm"
+            className="bg-blue-900 hover:bg-blue-800 transition-all text-white px-6 py-3 rounded-md text-xl shadow-sm"
           >
             Search Customer
           </button>
           <button
             onClick={createsalesorder}
-            className ={`${createsales? "bg-green-500": "bg-blue-600"} "hover:bg-blue-700 transition-all text-white px-6 py-3 rounded-md text-xl shadow-sm"`}
+            className ={`${createsales? "bg-green-500": "bg-blue-900"} "hover:bg-blue-800 transition-all text-white px-6 py-3 rounded-md text-xl shadow-sm"`}
           disabled = {createsales}
          >
             {createsales? "Salesorder Created": "Create Salesorder"}
