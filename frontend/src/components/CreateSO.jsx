@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios'
 import  {setorderdate, setcustno, setdeldate, setsalesno, setshipaddress, setshipcondition, setpayterm} from '../redux/slicers/homepageslice'
 import Salesitem from "./Salesitem";
+import { useNavigate } from "react-router-dom";
+
 const CreateSO = ()=>{
+  const navigate = useNavigate()
   const [salesno, setSalesno] = useState("");
   const [custno, setCustno] = useState("");
   const [deliverydate, setDeliverydate] = useState("");
@@ -141,11 +144,21 @@ return (
          >
             {createsales? "Salesorder Created": "Create Salesorder"}
           </button>
+          <button
+            onClick={handledelivery}
+            className ={`${createsales? "bg-blue-900 hover:cursor-pointer": "bg-gray-500"} "hover:bg-blue-800 transition-all text-white px-6 py-3 rounded-md text-xl shadow-sm"`}
+          disabled = {!createsales}
+         >
+            Create Delivery
+          </button>
         </div>
       </div>
       <Salesitem/>
     </>
   );
+  async function handledelivery (){
+  navigate("/createdelivery")
+  }
 async function createsalesorder() {
     debugger
   const req = {

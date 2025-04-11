@@ -30,12 +30,16 @@ const Homepage = ()=>{
                   </button>
       
                   {/* Change Sales Order Button */}
-                  <button className="w-full py-3 bg-blue-900 text-white font-medium rounded-md shadow hover:bg-sap-dark transition duration-200">
+                  <button
+                  onClick={handleonclick1}
+                  className="w-full py-3 bg-blue-900 text-white font-medium rounded-md shadow hover:bg-sap-dark transition duration-200">
                     Create Material
                   </button>
       
                   {/* Display Delivery Button */}
-                  <button className="w-full py-3 bg-blue-900 text-white font-medium rounded-md shadow hover:bg-sap-dark transition duration-200">
+                  <button
+                   onClick={handleonclick2}
+                    className="w-full py-3 bg-blue-900 text-white font-medium rounded-md shadow hover:bg-sap-dark transition duration-200">
                     Create Customer
                   </button>
       
@@ -49,5 +53,15 @@ const Homepage = ()=>{
         debugger;
         navigate("/createsalesorder")
       }
+      function handleonclick1(){
+        debugger;
+        navigate("/addmaterial")
       }
+      function handleonclick2(){
+        debugger;
+        navigate("/addcustomer")
+      }
+
+      }
+      
 export default Homepage

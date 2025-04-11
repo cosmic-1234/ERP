@@ -6,6 +6,10 @@ import Homepage from './components/Homepage'
 import CreateSO from './components/CreateSO'
 import Salesitem from './components/Salesitem'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Creatematerial from './components/Creatematerial'
+import Createcustomer from './components/Createcustomer'
+import Createdelivery from './components/Createdelivery'
+import Createinvoice from './components/Createinvoice'
 
 
 function App() {
@@ -17,6 +21,10 @@ function App() {
       <Routes>
     <Route path='/' element={<Homepage/>}/>
     <Route path='/createsalesorder' element={<CreateSO/>}/>
+    <Route path='/addmaterial' element={<Creatematerial/>}/>
+    <Route path='/addcustomer' element={<Createcustomer/>}/>
+    <Route path='/createdelivery' element={<Createdelivery/>}/>
+    <Route path='/createinvoice' element={<Createinvoice/>}/>
     </Routes>
     </BrowserRouter>
     {/* <CreateSO/>

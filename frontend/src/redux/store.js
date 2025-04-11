@@ -8,7 +8,7 @@ import { combineReducers } from "redux";
 const persistConfig = {
     key: "root", // Name of the key in the storage
     storage, // Use localStorage for persistence
-    whitelist: [], // Define which slices to persist
+    whitelist: ["homepageslice"], // Define which slices to persist
   };
   
   // Wrap the reducers with persistReducer

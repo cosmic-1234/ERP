@@ -65,7 +65,7 @@ try {
                 message: "Success"
               })
         } catch (error) {
-            return res.status(411).json({
+            return res.status(200).json({
                 message:"Error while sending the mail but customer created successfully"
             })
         }
@@ -82,7 +82,7 @@ try {
         }).status(411)
     }
 } catch (error) {
-    return res.json({
+    return res.status(411).json({
         message:error
     })
 }
@@ -170,6 +170,7 @@ const SALESORDERITEM = zod.object({
 })
 router.post("/createsalesorderitem", async(req,res)=>{
 try {
+    
     const success = SALESORDERITEM.safeParse(req.body)
     if(success.success){
      const material = await prismaClient.material.findFirst({
@@ -325,5 +326,47 @@ router.post("/createinvoice", async(req, res)=>{
    } catch (error) {
     console.log(error);
    }
+})
+router.get("/getcust", async(req, res)=>{
+    const customerno = req.query.customerno
+    try {
+        const customer = await prismaClient.customer.findFirst({
+            where:{
+                customerno:customerno
+            }
+        })
+        if(customer){
+            res.status(200).json({
+                customer: customer
+            })
+        }
+        else{
+            res.status(411).json({
+                message:"Customer does not exist"
+            })
+        }
+    } catch (error) {
+        res.status(411).json({
+            message: "Error while fetching customer please try again after sometime"
+        })
+    } 
+})
+router.get("/getamount", async(req,res)=>{
+    const orderWithItems = await prismaClient.salesorder.findUnique({
+        where: {
+          orderno: req.query.orderno
+        },
+        include: {
+          orderitems: true, 
+        },
+      });
+      if(orderWithItems){
+        const amount = orderWithItems.orderitems.reduce((sum,item)=>{
+            return sum + item.quantity*item.unitprice
+        },0)
+        return res.json({
+            amount: amount
+        })
+      }
 })
 module.exports=router

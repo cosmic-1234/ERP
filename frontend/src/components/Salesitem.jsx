@@ -9,6 +9,7 @@ const Salesitem = ()=>{
     const [rows, setRows] = useState(items);
     
       const handleChange = (index, field, value) => {
+        debugger
        const obj = {
           index:index,
           field:field,
@@ -64,11 +65,12 @@ const Salesitem = ()=>{
                     </td>
                     <td className="border px-6 py-3">
                       <input
-                      disabled = {row.disabled}
+                      disabled
                         type="number"
                         value={row.salesorder}
+                        onLoad={handleChange(index, "salesorder", salesno)}
                         onChange={(e) => handleChange(index, "salesorder", e.target.value)}
-                        className="w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className=" bg-gray-100 border-gray-300 w-full px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </td>
                     <td className="border px-6 py-3 text-center">
@@ -114,7 +116,7 @@ const Salesitem = ()=>{
         }
         dispatch(editstate(obj1))
         } catch (error) {
-          alert("Wefuckedup")
+          alert("Some error occured hence sales item is not created please check your input fields and try again")
         }
         
       }
