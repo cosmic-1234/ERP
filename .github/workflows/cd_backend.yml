@@ -34,7 +34,7 @@ jobs:
             chmod 600 ~/ssh_key
   
             # SSH to the VM and stop/remove the old container, then run the new container
-            ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@13.203.207.90 -t "EOF
+            ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@13.203.207.90 -t "
               # Stop and remove the existing container (if any)
               docker stop user_backend || true
               docker rm user_backend || true
