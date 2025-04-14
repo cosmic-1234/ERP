@@ -403,7 +403,7 @@ router.post("/createinvoice", async(req, res)=>{
         
     }
 
-   } catch (error) {
+   } catch ( error) {
     // console.log(error);
    }
 })
