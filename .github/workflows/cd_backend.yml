@@ -42,9 +42,9 @@ jobs:
               # Run the new container with environment variables
               docker run -d \
                 -p 3000:3000 \
-                -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-                -e SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }} \
-                -e TEMPLATE_ID=${{ secrets.TEMPLATE_ID }} \
+                -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+                -e SENDGRID_API_KEY="${{ secrets.SENDGRID_API_KEY }}" \
+                -e TEMPLATE_ID="${{ secrets.TEMPLATE_ID }}" \
                 --name user_backend \
                 --network erp-network \
                 alexgoot/backend:${{ github.sha }}
