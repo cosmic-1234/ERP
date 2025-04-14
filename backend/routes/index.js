@@ -5,5 +5,5 @@ const router = express.Router();
 router.use("/admin", adminrouter)
 router.use("/customer", customerrouter)
 
-
+    
 module.exports=router
