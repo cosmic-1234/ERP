@@ -1,22 +1,43 @@
 on:
     push:
+  
 jobs:
-       build:
-           runs-on: ubuntu-latest
-           steps:
-               - name: Checking out the code
-                 uses: actions/checkout@v2
-   
-               - name: docker login
-                 uses: docker/login-action@v2
-                 with:
-                   username: ${{ secrets.DOCKERHUBUSERNAME }}
-                   password: ${{ secrets.DOCKERHUBTOKEN }}
-               - name: Build and push to dockerhub    
-                 uses: docker/build-push-action@v4
-                 with:
-                   context:
-                   file: ./docker/Dockerfile.frontend
-                   push: true    
-                   tags: alexgoot/frontend:${{github.sha}}
-   
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checking out the code
+          uses: actions/checkout@v2
+  
+        - name: Docker login
+          uses: docker/login-action@v2
+          with:
+            username: ${{ secrets.DOCKERHUBUSERNAME }}
+            password: ${{ secrets.DOCKERHUBTOKEN }}
+  
+        - name: Build and push to Docker Hub    
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            file: ./docker/Dockerfile.frontend
+            push: true    
+            tags: alexgoot/frontend:${{ github.sha }}
+  
+        - name: Deploy to VM
+          run: |
+            # Save the SSH private key from GitHub secrets to a file
+            echo "${{ secrets.SSHKEY }}" > ~/ssh_key
+  
+            # Set correct file permissions for the SSH key
+            chmod 600 ~/ssh_key
+  
+            # SSH to the VM and stop/remove the old container, then run the new container
+            ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@13.203.207.90 "
+              docker stop user_frontend || true
+              docker rm user_frontend || true
+  
+              docker run -d \
+                -p 5173:5173 \
+                --name user_frontend \
+                alexgoot/frontend:${{ github.sha }}
+            "
+  
