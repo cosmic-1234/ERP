@@ -36,7 +36,7 @@ jobs:
               docker rm user_frontend || true
   
               docker run -d \
-                -p 5173:5173 \
+                -p 5173:4173 \
                 --name user_frontend \
                 alexgoot/frontend:${{ github.sha }}
             "
