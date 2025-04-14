@@ -222,7 +222,7 @@ async function createsalesorder() {
         paymentterms:       PAYTERMS,
         shippingconditions: SHIPCONDITION
   }
-  const salesorder = await axios.post("http://localhost:3000/api/v1/admin/createsalesorder", req)
+  const salesorder = await axios.post("http://13.203.207.90:3000/api/v1/admin/createsalesorder", req)
   if(salesorder){
     setCreatesales(true);
   }
@@ -231,7 +231,7 @@ async function createsalesorder() {
     async function searchcustomer() {
 
         
-        const customer = await axios.get("http://localhost:3000/api/v1/admin/getcust", {params:{customerno: CUSTNO}})
+        const customer = await axios.get("http://13.203.207.90:3000/api/v1/admin/getcust", {params:{customerno: CUSTNO}})
         // setorderdate, setcustno, setdeldate, setsalesno, setshipaddress, setshipcondition
         if(customer){
             

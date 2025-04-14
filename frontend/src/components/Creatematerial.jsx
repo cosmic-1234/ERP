@@ -19,7 +19,7 @@ const Creatematerial = ()=>{
                 currency:currency
             }
         }
-        const response_material = await axios.post("http://localhost:3000/api/v1/admin/addmaterial", obj)
+        const response_material = await axios.post("http://13.203.207.90:3000/api/v1/admin/addmaterial", obj)
         debugger
         if(response_material){
             alert(`Material created successfully with material`)
