@@ -1,6 +1,6 @@
 on:
     push:
-   jobs:
+jobs:
        build:
            runs-on: ubuntu-latest
            steps:
@@ -16,7 +16,7 @@ on:
                  uses: docker/build-push-action@v4
                  with:
                    context:
-                   file: ./docker/Dockerfile.frontend
+                   file: ./docker/Dockerfile.backend
                    push: true    
-                   tags: alexgoot/frontend:${{github.sha}}
+                   tags: alexgoot/backend:${{github.sha}}
    
