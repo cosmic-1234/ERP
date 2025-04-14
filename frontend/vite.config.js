@@ -7,6 +7,6 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: '0.0.0.0',  // Make sure Vite listens on all network interfaces
-    port: 5173,       // Port for the frontend
+    port: 4173,       // Port for the frontend
   },
 })
