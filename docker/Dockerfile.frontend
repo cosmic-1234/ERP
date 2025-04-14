@@ -23,4 +23,4 @@ RUN pnpm run build
 EXPOSE 5173
 
 # Start the app (adjust if you're not using Vite preview)
-CMD ["pnpm", "run", "preview", "--", "--port", "4173"]
+CMD ["pnpm", "run", "preview", "--", "--port", "5173"]
