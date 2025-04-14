@@ -18,4 +18,4 @@ jobs:
                 context:
                 file: ./docker/Dockerfile.backend
                 push: true    
-                tags: ERP/backend:${{github.sha}}
+                tags: alexgoot/backend:${{github.sha}}
