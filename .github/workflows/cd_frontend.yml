@@ -16,7 +16,7 @@ jobs:
                  uses: docker/build-push-action@v4
                  with:
                    context:
-                   file: ./docker/Dockerfile.backend
+                   file: ./docker/Dockerfile.frontend
                    push: true    
-                   tags: alexgoot/backend:${{github.sha}}
+                   tags: alexgoot/frontend:${{github.sha}}
    
