@@ -119,7 +119,7 @@ const Salesitem = ()=>{
               unitprice: parseInt(item.unitprice)
         }
         try {
-          const response = await axios.post("http://localhost:3000/api/v1/admin/createsalesorderitem", req)
+          const response = await axios.post("http://13.203.207.90:80/api/v1/admin/createsalesorderitem", req)
         console.log(response)
         const obj1 = {
           index:index,

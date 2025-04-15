@@ -107,7 +107,7 @@ const Createdelivery=()=>{
                 shippingaddress:SHIPADDRESS,
                 ...(pgi && { goodsissuedate: pgi }) 
                 }
-                const delivery_response = await axios.post("http://localhost:3000/api/v1/admin/createdelivery", obj)
+                const delivery_response = await axios.post("http://13.203.207.90:80/api/v1/admin/createdelivery", obj)
                 if(delivery_response.status === 200){
                     alert("Delivery Created Successfully")
                     setDelcreate(true);

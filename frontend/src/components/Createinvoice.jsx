@@ -13,7 +13,7 @@ const[finalamount, setAmount] = useState(3)
 async function getprice(SALESNO){
     debugger
     try {
-        const amount = await axios.get("http://localhost:3000/api/v1/admin/getamount",{params:{orderno: SALESNO}})
+        const amount = await axios.get("http://13.203.207.90:80/api/v1/admin/getamount",{params:{orderno: SALESNO}})
         debugger
         if(amount.data){
             return amount.data.amount
@@ -121,7 +121,7 @@ useEffect(()=>{
     billingdate:billingdate,
     amount:finalamount
 }
-const invoice_response = await axios.post("http://localhost:3000/api/v1/admin/createinvoice", req)
+const invoice_response = await axios.post("http://13.203.207.90:80/api/v1/admin/createinvoice", req)
 debugger
 if(invoice_response.status === 200){
   alert("Invoice created successfully");

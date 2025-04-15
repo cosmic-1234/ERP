@@ -23,7 +23,7 @@ const Createcustomer = ()=>{
             creditlimit:parseInt(creditlimit),
             email
          }
-         const customer_response = await axios.post("http://13.203.207.90:3000/api/v1/admin/addcustomer", obj)
+         const customer_response = await axios.post("http://13.203.207.90:80/api/v1/admin/addcustomer", obj)
          debugger;
          if(customer_response.status== 200 ){
              alert ("Customer Created Successfully")
