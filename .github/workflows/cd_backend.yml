@@ -53,7 +53,7 @@ jobs:
                 -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
                 -e SENDGRID_API_KEY='${{ secrets.SENDGRID_API_KEY }}' \
                 -e TEMPLATE_ID='${{ secrets.TEMPLATE_ID }}' \
-                -e TEMPLATE_ID='${{ secrets.TEMPLATE_ID-1 }}'
+                -e TEMPLATE_ID='${{ secrets.TEMPLATE_ID_1 }}'
                 --name user_backend \
                 --network erp-network \
                 alexgoot/backend:${{ github.sha }}
