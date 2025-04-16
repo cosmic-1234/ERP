@@ -44,7 +44,7 @@ jobs:
               # Run the new container with environment variables
               docker run -d \
                     -p 5432:5432 \
-                    -e POSTGRES_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+                    -e POSTGRES_PASSWORD='${{ secrets.DATABASE_PASSWORD }}' \
                     --name postgres \
                     --network erp-network \
                     postgres
