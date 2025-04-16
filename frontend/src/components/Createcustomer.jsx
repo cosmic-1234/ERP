@@ -30,7 +30,7 @@ const Createcustomer = ()=>{
             creditlimit:parseInt(creditlimit),
             email
          }
-         const customer_response = await axios.post("http://localhost:3000/api/v1/admin/addcustomer", obj)
+         const customer_response = await axios.post("http://13.203.207.90:80/api/v1/admin/addcustomer", obj)
          debugger;
          if(customer_response.status== 200 ){
              alert ("Customer Created Successfully")
@@ -198,7 +198,7 @@ const Createcustomer = ()=>{
           debugger
        try {
         
-          const doesverify = await axios.post("http://localhost:3000/api/v1/admin/authenticate",{otp:otp, email:email})
+          const doesverify = await axios.post("http://13.203.207.90:80/api/v1/admin/authenticate",{otp:otp, email:email})
       
         debugger
         if(doesverify.status === 200){
@@ -221,7 +221,7 @@ const Createcustomer = ()=>{
       const obj = {
         email:email
       }
-      const isverified = await axios.post("http://localhost:3000/api/v1/admin/setotp", obj)
+      const isverified = await axios.post("http://13.203.207.90:80/api/v1/admin/setotp", obj)
       debugger;
 
       if(isverified.status ===200){
