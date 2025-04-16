@@ -6,11 +6,14 @@ const react = require("react");
 const { prismaClient } = require("../db/db");
 const sgMail = require('@sendgrid/mail');
 const ReactPDF = require('@react-pdf/renderer');
+const crypto = require("crypto");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 require('@babel/register')({
     extensions: ['.js', '.jsx']
   });
 const InvoicePDF = require('../invoicepdf.jsx');
+const { create } = require("domain");
+const { constants } = require("buffer");
 async function sendEmailWithPDF (invoice, totalamount) {
     // Generate PDF as buffer
     try {
@@ -90,8 +93,21 @@ const SALESBODY =       zod.object({
 })
 router.post("/addcustomer", async(req, res)=>{
 try {
+
+   
     const success = CUSTOMERBODY.safeParse(req.body);
     if(success.success){
+        const verified = await prismaClient.verification.findFirst({
+            where:{
+                email:success.data.email,
+                isverfied: true
+            }
+        })
+        if(!verified){
+            return res.status(411).json({
+                message: "You are not verified sir"
+            })
+        }
          const customer = await prismaClient.customer.create({
             data:{
                 customerno: success.data.customerno,
@@ -459,8 +475,45 @@ router.get("/getcust", async (req, res) => {
     }
   });
 
+  const VERIFYBODY  = zod.object({
+    email: zod.string().email(),
+    otp: zod.string()
+  })
 
-
+router.post("/authenticate", async(req, res)=>{
+    const success = VERIFYBODY.safeParse(req.body);
+    if(success.success){
+    const isverfied = await prismaClient.verification.findFirst({
+        where:{
+            email:success.data.email,
+            otp: success.data.otp
+        }
+        
+    })
+    if(isverfied){
+        const test = await prismaClient.verification.update({
+            where:{
+                email:success.data.email,
+            otp: success.data.otp
+            },
+            data:{
+                isverfied:true
+            }
+        })
+        if(test){
+        return res.status(200).json({
+            message: "Successful"
+        });}
+        return res.status(401).json({
+            message: "Issue while updating database"
+        })
+    }
+    return res.status(411).json({
+        message: "error"
+    });
+}
+return res.status(403).json({message: "error"});
+})
 
 router.get("/getamount", async(req,res)=>{
     const orderWithItems = await prismaClient.salesorder.findUnique({
@@ -479,5 +532,87 @@ router.get("/getamount", async(req,res)=>{
             amount: amount
         })
       }
+})
+const OTPBODY = zod.object({
+    email: zod.string().email(),
+})
+router.post("/setotp", async(req,res)=>{
+    const success = OTPBODY.safeParse(req.body);
+    if(success.success){
+        const otp = crypto.randomBytes(3).toString("hex");
+        const already = await prismaClient.verification.findFirst({
+            where:{
+                email:success.data.email,
+                isverfied:true
+            }
+        })
+        if(already){
+            return res.status(411).json({
+                message: "Already verified email please use different email to login"
+            })
+        }
+   const verification = await prismaClient.verification.findFirst({
+    where:{email:success.data.email,
+          isverfied: false
+    },
+    
+   })
+        if(verification){
+           const verification1 = await prismaClient.verification.update({
+            where:{email:success.data.email},
+                data:{
+                    otp:otp
+                }
+            
+           })
+           if(verification1){
+            const msg = {
+                to: success.data.email,
+                from: {
+                    name: "BIGBANG",
+                    email:'baskinson1221@gmail.com', // Your SendGrid verified sender email
+                },
+                templateId: process.env.TEMPLATE_ID_1,
+                dynamic_template_data: {
+                    otp:otp, // This should match the placeholder in your SendGrid template
+                  }
+              };
+              await sgMail.send(msg);
+
+        
+            return res.status(200).json({
+                
+                message: "OTP created"
+            })
+           }
+           
+        }
+        else{
+            const verification2 = await prismaClient.verification.create({
+                data:{
+                    email:success.data.email,
+                    isverfied:false,
+                    otp:otp
+                }
+            })
+            if(verification2){
+                const msg = {
+                    to: success.data.email,
+                    from: {
+                        name: "BIGBANG",
+                        email:'baskinson1221@gmail.com', // Your SendGrid verified sender email
+                    },
+                    templateId: process.env.TEMPLATE_ID_1,
+                    dynamic_template_data: {
+                        otp:otp, // This should match the placeholder in your SendGrid template
+                      }
+                  };
+                  await sgMail.send(msg);
+                return res.status(200).json({
+                    message: "OTP created"
+                });
+            }
+        }
+    }
 })
 module.exports=router

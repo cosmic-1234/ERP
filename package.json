@@ -8,7 +8,6 @@
     "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:migrate": "pnpm prisma migrate dev --name just iteration && node backend/index.js"
-    
   },
   "keywords": [],
   "author": "",
@@ -18,6 +17,7 @@
     "@react-pdf/renderer": "^4.3.0",
     "@sendgrid/mail": "^8.1.5",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^5.1.0",
     "prisma": "^6.5.0",
     "react": "^19.1.0",

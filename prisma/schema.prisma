@@ -85,3 +85,8 @@ model pricingconditions {
   validto DateTime
   amount Decimal?
 }
+model verification {
+  email     String @unique
+  isverfied Boolean
+  otp       String
+}
